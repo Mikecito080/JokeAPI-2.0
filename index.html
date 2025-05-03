@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <main id="app">
+<button onclick="filtro('https://picsum.photos/400/300?grayscale')">grayscale</button>
+<button onclick="filtro('https://picsum.photos/400/300?blur')">blur</button>
+    </main>
+
+    <script>
+        let pokemones = [];
+let totalPokes = 30; /* debe agregarse uno mas ya q el indice comienza en 0 */
+
+async function  conexionLista() {
+    const res = await fetch('https://picsum.photos/v2/list?page=2&limit=20/300/200')
+    const data = await res.json()
+    pokemones = data;
+    //mostrarLista(pokemones)
+    console.log(pokemones)
+    //for (var i = 0; i< totalPokes; i++){
+      // console.log(pokemones[i].url)
+       //document.getElementById("app").innerHTML += "<img src=" + data[i].download_url + ">"
+    //}
+}
+conexionLista()
+
+async function filtro(unTipo){
+    try{
+        const respuesta= await fetch (unTipo);
+        const datos = await respuesta.json();
+
+        const pokemonesFiltrados = datos;
+        console.log(pokemonesFiltrados)
+    } catch (error){
+        console.error("Error", error);
+        document.getElementById("app").innerHTML = `<p>Error al cargar pokemon de tipo "${unTipo}".</p>`
+    }
+}
+
+    </script>
+</body>
+</html>
